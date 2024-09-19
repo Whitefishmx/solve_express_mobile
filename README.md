@@ -1,2 +1,2 @@
 # solve_express_mobile
-Aplicación móvil de Solve apra el adelanto de nomina
+Aplicación móvil de Solve para el adelanto de nomina
