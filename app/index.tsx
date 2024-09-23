@@ -1,19 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
-import Login from './src/pages/Login'
-import InputPassword from "./src/components/InputPassword";
+import { NavigationContainer } from '@react-navigation/native';
+import Login from './src/pages/Login';
 import 'react-native-gesture-handler';
-import Component from "react-native-paper/lib/typescript/components/List/ListItem";
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Page() {
- 
-  return (
-    <View>
-      <Login/>
-
-
-    </View> 
-    
-  );
+    return (
+        <NavigationContainer>
+            <SafeAreaView>
+                <Login />
+            </SafeAreaView>
+        </NavigationContainer>
+    );
 }
-
