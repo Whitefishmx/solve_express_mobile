@@ -1,14 +1,14 @@
-import { NavigationContainer } from '@react-navigation/native';
-import Login from './src/pages/Login';
 import 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { PaperProvider } from 'react-native-paper';
+import { MyTabs } from './src/components';
 
 export default function Page() {
     return (
-        <NavigationContainer>
-            <SafeAreaView>
-                <Login />
+        <PaperProvider>
+            <SafeAreaView style={{ flex: 1 }}>
+                <MyTabs />
             </SafeAreaView>
-        </NavigationContainer>
+        </PaperProvider>
     );
 }
