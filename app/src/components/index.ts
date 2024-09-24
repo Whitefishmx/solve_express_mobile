@@ -1,1 +1,1 @@
-export * from './MyTaps'
+export * from './InputPassword';
