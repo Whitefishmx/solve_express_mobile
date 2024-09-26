@@ -1,5 +1,5 @@
-import { React, useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, TouchableWithoutFeedback, Pressable } from 'react-native';
+import { React } from 'react';
+import { Text, View, StyleSheet, TextInput, Image, Pressable } from 'react-native';
 
 import InputPassword from '../../components/InputPassword';
 import { useNavigation } from 'expo-router';
@@ -14,6 +14,7 @@ export const Login = () => {
                     source={{
                         uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMF4YyD9ZC__DsCN6ZhVnSaQnCrqyuBremMAs9iabq0O5gh5IzoX7Fl8zk4rKnac8_eq8&usqp=CAU',
                     }}
+                    resizeMode='stretch'
                 />
                 <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Bienvenido a Solve Express</Text>
                 <Text>Accede a tu adelanto de salario de manera</Text>
@@ -25,24 +26,24 @@ export const Login = () => {
 
                 <InputPassword />
 
-                <TouchableWithoutFeedback
+                <Pressable
                 //    onPress={() => navigate('Profile') }
                 >
                     <View style={styles.olvido}>
                         <Text>¿Olvidaste tu contraseña?</Text>
                     </View>
-                </TouchableWithoutFeedback>
+                </Pressable>
 
                 <Pressable style={styles.button} onPress={() => navigation.navigate('Home')}>
                     <Text style={{ color: 'white' }}>Iniciar Sesión</Text>
                 </Pressable>
             </View>
 
-            <TouchableWithoutFeedback>
+            <Pressable>
                 <View style={styles.registro}>
                     <Text style={{ fontWeight: '700' }}>Registrarse</Text>
                 </View>
-            </TouchableWithoutFeedback>
+            </Pressable>
 
             {/* <View style={styles.containerOr}>
                     <View style={styles.hairline} />
@@ -75,13 +76,13 @@ export const Login = () => {
                 </View> */}
 
             <View style={styles.footer}>
-                <TouchableWithoutFeedback>
+                <Pressable>
                     <Text style={{ fontSize: 12 }}> Términos de Servicio</Text>
-                </TouchableWithoutFeedback>
+                </Pressable>
                 <Text style={{ fontSize: 12 }}> | </Text>
-                <TouchableWithoutFeedback>
+                <Pressable>
                     <Text style={{ fontSize: 12 }}>Politica de Privacidad</Text>
-                </TouchableWithoutFeedback>
+                </Pressable>
             </View>
         </View>
     );
@@ -113,7 +114,6 @@ const styles = StyleSheet.create({
         width: 220,
         paddingHorizontal: 10,
         marginBottom: 25,
-        resizeMode: 'stretch',
     },
     login: {
         margin: 20,

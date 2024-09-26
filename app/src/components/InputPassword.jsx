@@ -1,6 +1,6 @@
 import React from "react"
 import  { useState } from 'react'
-import { View,  TextInput, TouchableWithoutFeedback, StyleSheet, Text, Button, Image  } from "react-native"
+import { View,  TextInput, TouchableWithoutFeedback, StyleSheet, Text, Button, Image, Pressable  } from "react-native"
 
 
 export default function InputPassword () {
@@ -19,14 +19,15 @@ export default function InputPassword () {
 
             />
         
-            <TouchableWithoutFeedback 
+            <Pressable 
                 onPress={() => setHidePass(!hidePass)}
             >
                 <Image
                     style={styles.imageButton}
                     source={hidePass ===true ? require('../../../assets/images/ic_hide_password.png') : require('../../../assets/images/ic_show_password.png')}
+                    resizeMode="stretch"
                     />
-            </TouchableWithoutFeedback>
+            </Pressable>
 
         </View> 
     )
@@ -50,8 +51,7 @@ const styles = StyleSheet.create({
     },
     imageButton: {
         height: 22,
-        width: 22,
-        resizeMode: 'stretch',
+        width: 22
     },
 });
 
