@@ -1,1 +1,2 @@
-export * from './MyTaps'
+export * from './MyTaps';
+export * from './MyStack';

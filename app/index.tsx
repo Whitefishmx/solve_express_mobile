@@ -1,13 +1,13 @@
 import 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PaperProvider } from 'react-native-paper';
-import Login from './src/pages/Login';
+import { MyStack } from './src/routes';
 
 export default function Page() {
     return (
         <PaperProvider>
             <SafeAreaView style={{ flex: 1 }}>
-                <Login />
+                <MyStack />
             </SafeAreaView>
         </PaperProvider>
     );

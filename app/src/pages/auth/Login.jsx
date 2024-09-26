@@ -1,11 +1,11 @@
 import { React, useState } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, TouchableWithoutFeedback } from 'react-native';
-import InputPassword from '../components/InputPassword';
-// import { StackNavigator } from 'react-navigation';
-// import {  } from 'react-native-paper';
-import Constants from 'expo-constants';
+import { Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, Image, TouchableWithoutFeedback, Pressable } from 'react-native';
 
-const Login = () => {
+import InputPassword from '../../components/InputPassword';
+import { useNavigation } from 'expo-router';
+
+export const Login = () => {
+    const navigation = useNavigation();
     return (
         <View style={styles.login}>
             <View style={styles.head}>
@@ -33,9 +33,9 @@ const Login = () => {
                     </View>
                 </TouchableWithoutFeedback>
 
-                <TouchableOpacity style={styles.button}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('Home')}>
                     <Text style={{ color: 'white' }}>Iniciar Sesión</Text>
-                </TouchableOpacity>
+                </Pressable>
             </View>
 
             <TouchableWithoutFeedback>
@@ -177,5 +177,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-
-export default Login;
