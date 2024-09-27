@@ -13,8 +13,8 @@ export const Login = ({ navigation }: Props) => {
     const { login } = useAuthStore();
 
     const [form, setForm] = useState({
-        rfc: '',
-        password: '',
+        rfc: 'sdkray',
+        password: '=lual/2024',
     });
     const [isPosting, setIsPosting] = useState(false);
     const onLogin = async () => {
@@ -64,8 +64,8 @@ export const Login = ({ navigation }: Props) => {
                         <Text>¿Olvidaste tu contraseña?</Text>
                     </View>
                 </Pressable>
-                <Text>{JSON.stringify(form, null, 2)}</Text>
-                <Text>{process.env.EXPO_PUBLIC_API_URL_DEV}</Text>
+                {/* <Text>{JSON.stringify(form, null, 2)}</Text>
+                <Text>{process.env.EXPO_PUBLIC_API_URL_DEV}</Text> */}
                 <Pressable style={styles.button} onPress={onLogin} disabled={isPosting}>
                     <Text style={{ color: 'white' }}>Iniciar Sesión</Text>
                 </Pressable>
