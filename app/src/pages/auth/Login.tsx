@@ -1,11 +1,36 @@
-import { React } from 'react';
-import { Text, View, StyleSheet, TextInput, Image, Pressable } from 'react-native';
+import { useState } from 'react';
+import { Text, View, StyleSheet, TextInput, Image, Pressable, Alert } from 'react-native';
 
 import InputPassword from '../../components/InputPassword';
-import { useNavigation } from 'expo-router';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParams } from '../../infrastructure/interfaces/navigation';
+import { useAuthStore } from '../../store/auth/useAuthStore';
 
-export const Login = () => {
-    const navigation = useNavigation();
+interface Props extends StackScreenProps<RootStackParams, 'Login'> {}
+
+export const Login = ({ navigation }: Props) => {
+    // const navigation = useNavigation();
+    const { login } = useAuthStore();
+
+    const [form, setForm] = useState({
+        rfc: '',
+        password: '',
+    });
+    const [isPosting, setIsPosting] = useState(false);
+    const onLogin = async () => {
+        const { rfc, password } = form;
+        if (rfc.length === 0 || password.length === 0) {
+            return;
+        }
+        setIsPosting(true);
+        const resp = await login(rfc, password);
+        if (resp) {
+            return;
+        }
+        Alert.alert('Error', 'Usuario o contraseña incorrectos');
+        setIsPosting(false);
+    };
+
     return (
         <View style={styles.login}>
             <View style={styles.head}>
@@ -22,9 +47,15 @@ export const Login = () => {
             </View>
 
             <View>
-                <TextInput style={styles.inputIngreso} placeholder='RFC' maxLength={13} />
-
-                <InputPassword />
+                <TextInput
+                    style={styles.inputIngreso}
+                    placeholder='RFC'
+                    maxLength={13}
+                    value={form.rfc}
+                    onChangeText={rfc => setForm({ ...form, rfc })}
+                />
+                {/* @ts-ignore */}
+                <InputPassword form={form} setForm={setForm} />
 
                 <Pressable
                 //    onPress={() => navigate('Profile') }
@@ -33,8 +64,9 @@ export const Login = () => {
                         <Text>¿Olvidaste tu contraseña?</Text>
                     </View>
                 </Pressable>
-
-                <Pressable style={styles.button} onPress={() => navigation.navigate('Home')}>
+                <Text>{JSON.stringify(form, null, 2)}</Text>
+                <Text>{process.env.EXPO_PUBLIC_API_URL_DEV}</Text>
+                <Pressable style={styles.button} onPress={onLogin} disabled={isPosting}>
                     <Text style={{ color: 'white' }}>Iniciar Sesión</Text>
                 </Pressable>
             </View>
@@ -104,7 +136,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 14,
         marginHorizontal: 40,
-        justifyContent: 'right',
         borderRadius: 5,
         borderColor: '#3071FF',
         borderWidth: 1,
