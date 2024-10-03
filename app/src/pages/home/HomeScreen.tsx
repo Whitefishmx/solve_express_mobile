@@ -2,16 +2,22 @@ import { useAuthStore } from '../../store/auth/useAuthStore';
 import { SafeAreaView, Text, TextInput, View, Image, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import Slider from '@react-native-community/slider';
+import MaskInput, { createNumberMask } from 'react-native-mask-input';
 
 export const HomeScreen = () => {
     const { logout } = useAuthStore();
     const diasTrabajados = 4;
     const adelantoDisponible = 2000;
-    const adelantoSolicitado = 1000;
+    const adelantoSolicitado = 100;
     const minAdelanto = 10;
 
     const [value, setValue] = useState(adelantoSolicitado);
     // console.log(value);
+
+    const dollarMask = createNumberMask({
+        prefix: ['$'],
+        separator: '',
+    });
     return (
         <View style={styles.body}>
             <Pressable onPress={logout}>
@@ -28,7 +34,7 @@ export const HomeScreen = () => {
             <View style={styles.box}>
                 <Text style={{ fontWeight: 'medium', fontSize: 16 }}>Nombre Persona</Text>
 
-                <Text style={{ fontWeight: 'regular', fontSize: 14 }}>Solve. Espress</Text>
+                <Text style={{ fontWeight: 'regular', fontSize: 14 }}>Solve. Express</Text>
             </View>
 
             <View>
@@ -46,17 +52,22 @@ export const HomeScreen = () => {
                 </View>
             </View>
 
-            <View style={{ borderColor:'#000', alignItems: 'center' }}>
-                <Text style={{ fontWeight: 'medium', fontSize: 16 }}>Solicistaste</Text>
-                <TextInput
+            <View style={{ borderColor: '#000', alignItems: 'center' }}>
+                <Text style={{ fontWeight: 'medium', fontSize: 16, textAlign: 'center' }}>Solicitar:</Text>
+
+                <MaskInput
                     style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center' }}
-                    value={value.toFixed(0)}
-                    keyboardType='numeric'
-                    onChangeText={value => setValue(Number(value))}
+                    value={'' + value}
+                    mask={dollarMask}
+                    onChangeText={(masked, unmasked) => {
+                        if (Number(unmasked) <= adelantoDisponible) {
+                            setValue(Number(unmasked)); // you can use the masked value as well
+                        }
+                    }}
                 />
 
                 <Slider
-                    style={{width:300, height: 40 }}
+                    style={{ width: 300, height: 40 }}
                     minimumValue={minAdelanto}
                     maximumValue={adelantoDisponible}
                     minimumTrackTintColor='#FF9400'
@@ -67,13 +78,9 @@ export const HomeScreen = () => {
                     step={1}
                 />
 
-                <View style={{ width: '89%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text>{minAdelanto}</Text>
-                    <Text>{adelantoDisponible}</Text>
-                </View>
-                <TouchableOpacity style={styles.button}>
+                <Pressable style={styles.button}>
                     <Text style={{ color: 'white' }}>Solicitar Adelanto</Text>
-                </TouchableOpacity>
+                </Pressable>
             </View>
 
             <View>
@@ -95,15 +102,17 @@ const styles = StyleSheet.create({
     },
     body: {
         alignItems: 'center',
-        margin: 10,
-        padding: 10,
+        // margin: 10,
+        // padding: 10,
     },
     box: {
         backgroundColor: 'white',
         alignItems: 'center',
         // width: '100%',
-        padding: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         margin: 10,
+        borderRadius: 8,
     },
     comentarios: {
         alignItems: 'flex-start',
@@ -120,7 +129,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 6,
         alignItems: 'center',
-        width: '80%',
+        width: '70%',
         height: 40,
     },
 });

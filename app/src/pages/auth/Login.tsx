@@ -13,8 +13,8 @@ export const Login = ({ navigation }: Props) => {
     const { login } = useAuthStore();
 
     const [form, setForm] = useState({
-        rfc: 'sdkray',
-        password: '=lual/2024',
+        rfc: 'MALU970621T16',
+        password: 'Pass1234',
     });
     const [isPosting, setIsPosting] = useState(false);
     const onLogin = async () => {
