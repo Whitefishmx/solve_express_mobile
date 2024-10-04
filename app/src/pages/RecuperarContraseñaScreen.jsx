@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 
 
-const RecuperarContraseñaScreen = () => {
+export const RecuperarContraseñaScreen = () => {
 
 return (
 

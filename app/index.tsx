@@ -1,19 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
-import Login from './src/pages/Login'
-import InputPassword from "./src/components/InputPassword";
-import 'react-native-gesture-handler';
-import Component from "react-native-paper/lib/typescript/components/List/ListItem";
-
+// import 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { PaperProvider } from 'react-native-paper';
+import { MyStack } from './src/routes';
+import { AuthProvider } from './src/providers/authProvider';
 
 export default function Page() {
- 
-  return (
-    <View>
-      <Login/>
-
-
-    </View> 
-    
-  );
+    return (
+        <PaperProvider>
+            <SafeAreaView style={{ flex: 1 }}>
+                <AuthProvider>
+                    <MyStack />
+                </AuthProvider>
+            </SafeAreaView>
+        </PaperProvider>
+    );
 }
-
