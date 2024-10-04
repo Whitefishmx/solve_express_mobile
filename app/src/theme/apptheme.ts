@@ -28,4 +28,3 @@ export const stylesG = StyleSheet.create({
         marginBottom: 10,
     },
 });
-
