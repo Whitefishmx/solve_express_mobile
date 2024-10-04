@@ -104,13 +104,14 @@ const styles = StyleSheet.create({
     },
     modalStyle:{
         backgroundColor: 'white',
-        boxShadowColor: '#000',
+        ShadowColor: '#000',
+        shadowColor: '#000',
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
         shadowOffset:{
-            width: 0,
+            width: 4,
             height: 4,
         },
-        boxShadowOpacity: 0.25,
-        boxShadowRadius: 4,
         elevation: 5,
         paddingVertical: 25,
         paddingHorizontal: 50,

@@ -1,5 +1,5 @@
 import { useAuthStore } from '../../store/auth/useAuthStore';
-import { SafeAreaView, Text, TextInput, View, Image, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+import { Text, TextInput, View, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Slider from '@react-native-community/slider';
 import MaskInput, { createNumberMask } from 'react-native-mask-input';
@@ -9,10 +9,11 @@ import ConfirmacionModal from '../../components/ConfirmacionModal'
 
 export const HomeScreen = () => {
     // const { logout } = useAuthStore();
+    const { user } = useAuthStore();
     const diasTrabajados = 4;
     const adelantoDisponible = 2000;
-    const adelantoSolicitado = 100;
-    const minAdelanto = 10;
+    const adelantoSolicitado = 250;
+    const minAdelanto = 250;
 
     const [value, setValue] = useState(adelantoSolicitado);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,7 @@ export const HomeScreen = () => {
         separator: '',
     });
     return (
-        <>
+        <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
             <CerrarSesion/>
             <View style={styles.body}>
                 <View>
@@ -35,7 +36,7 @@ export const HomeScreen = () => {
                     />
                 </View>
                 <View style={styles.box}>
-                    <Text style={{ fontWeight: 'medium', fontSize: 16 }}>Nombre Persona</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{user?.fullName}</Text>
 
                     <Text style={{ fontWeight: 'regular', fontSize: 14 }}>Solve. Express</Text>
                 </View>
@@ -55,16 +56,16 @@ export const HomeScreen = () => {
                     </View>
                 </View>
 
-                <View style={{ borderColor: '#000', alignItems: 'center' }}>
-                    <Text style={{ fontWeight: 'medium', fontSize: 16, textAlign: 'center' }}>Solicitar:</Text>
+                <View style={styles.boxCard}>
+                    <Text style={{ fontWeight: 'medium', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Solicitar:</Text>
 
                     <MaskInput
-                        style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center' }}
+                        style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center', width: '90%', borderRadius: 36 }}
                         value={'' + value}
                         mask={dollarMask}
                         onChangeText={(masked, unmasked) => {
                             if (Number(unmasked) <= adelantoDisponible) {
-                                setValue(Number(unmasked)); // you can use the masked value as well
+                                setValue(Number(unmasked));
                             }
                         }}
                     />
@@ -85,18 +86,18 @@ export const HomeScreen = () => {
                         <Text style={{ color: 'white' }}>Solicitar Adelanto</Text>
                     </Pressable>
                     <ConfirmacionModal
-                    isModalOpen={isModalOpen}
-                    setIsModalOpen={setIsModalOpen}
-                    value={value}
-                />
+                        isModalOpen={isModalOpen}
+                        setIsModalOpen={setIsModalOpen}
+                        value={value}
+                    />
                 </View>
 
-                <View>
+                <View style={{ width: '100%', marginTop: 10 }}>
                     <Text>Información Adicional</Text>
                     <TextInput style={styles.comentarios} placeholder='Información Adicional'></TextInput>
                 </View>
             </View>
-        </>
+        </ScrollView>
     );
 };
 
@@ -111,13 +112,21 @@ const styles = StyleSheet.create({
     },
     body: {
         alignItems: 'center',
-        // margin: 10,
-        // padding: 10,
+        padding: 0,
     },
     box: {
-        backgroundColor: 'white',
+        backgroundColor: '#ffffff',
         alignItems: 'center',
         // width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        margin: 10,
+        borderRadius: 8,
+    },
+    boxCard: {
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 10,
         margin: 10,
@@ -129,8 +138,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: '#EDEFF2',
         color: '#7E858C',
-        width: 400,
-        height: 200,
+        width: '100%',
+        height: 100,
+        borderWidth: 1,
+        borderRadius: 8,
     },
     button: {
         justifyContent: 'center',
@@ -139,7 +150,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 6,
         alignItems: 'center',
-        width: 'auto',
+        width: '80%',
         height: 40,
         shadowColor: '#000',
         shadowOpacity: 0.25,
