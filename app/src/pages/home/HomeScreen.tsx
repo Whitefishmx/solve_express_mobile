@@ -1,92 +1,96 @@
 import { useAuthStore } from '../../store/auth/useAuthStore';
-import { SafeAreaView, Text, TextInput, View, Image, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+import { Text, TextInput, View, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import Slider from '@react-native-community/slider';
 import MaskInput, { createNumberMask } from 'react-native-mask-input';
 
 export const HomeScreen = () => {
     const { logout } = useAuthStore();
+    const { user } = useAuthStore();
+
     const diasTrabajados = 4;
     const adelantoDisponible = 2000;
-    const adelantoSolicitado = 100;
-    const minAdelanto = 10;
+    const adelantoSolicitado = 250;
+    const minAdelanto = 250;
 
     const [value, setValue] = useState(adelantoSolicitado);
-    // console.log(value);
 
     const dollarMask = createNumberMask({
         prefix: ['$'],
         separator: '',
     });
+
     return (
         <View style={styles.body}>
-            <Pressable onPress={logout}>
-                <Text>Cerrar sesión</Text>
-            </Pressable>
-            <View>
-                <Image
-                    style={styles.logo}
-                    source={{
-                        uri: 'https://lirp.cdn-website.com/5e3948ec/dms3rep/multi/opt/Logo+Solve+Express+750x250-1920w.png',
-                    }}
-                />
-            </View>
-            <View style={styles.box}>
-                <Text style={{ fontWeight: 'medium', fontSize: 16 }}>Nombre Persona</Text>
-
-                <Text style={{ fontWeight: 'regular', fontSize: 14 }}>Solve. Express</Text>
-            </View>
-
-            <View>
-                <Text style={{ fontWeight: 'bold', fontSize: 26 }}>¿Cuánto dinero necesitas?</Text>
-            </View>
-
-            <View style={{ flexDirection: 'row' }}>
-                <View style={styles.box}>
-                    <Text>Días trabajados</Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{diasTrabajados}</Text>
-                </View>
-                <View style={styles.box}>
-                    <Text>Tu adelanto disponible</Text>
-                    <Text style={{ fontWeight: 'bold', fontSize: 24 }}>${adelantoDisponible}</Text>
-                </View>
-            </View>
-
-            <View style={{ borderColor: '#000', alignItems: 'center' }}>
-                <Text style={{ fontWeight: 'medium', fontSize: 16, textAlign: 'center' }}>Solicitar:</Text>
-
-                <MaskInput
-                    style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center' }}
-                    value={'' + value}
-                    mask={dollarMask}
-                    onChangeText={(masked, unmasked) => {
-                        if (Number(unmasked) <= adelantoDisponible) {
-                            setValue(Number(unmasked)); // you can use the masked value as well
-                        }
-                    }}
-                />
-
-                <Slider
-                    style={{ width: 300, height: 40 }}
-                    minimumValue={minAdelanto}
-                    maximumValue={adelantoDisponible}
-                    minimumTrackTintColor='#FF9400'
-                    maximumTrackTintColor='#EDEFF2'
-                    thumbTintColor='#FF9400'
-                    value={value}
-                    onValueChange={nwe => setValue(nwe)}
-                    step={1}
-                />
-
-                <Pressable style={styles.button}>
-                    <Text style={{ color: 'white' }}>Solicitar Adelanto</Text>
+            <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
+                <Pressable onPress={logout}>
+                    <Text>Cerrar sesión</Text>
                 </Pressable>
-            </View>
+                <View>
+                    <Image
+                        style={styles.logo}
+                        source={{
+                            uri: 'https://lirp.cdn-website.com/5e3948ec/dms3rep/multi/opt/Logo+Solve+Express+750x250-1920w.png',
+                        }}
+                    />
+                </View>
+                <View style={styles.box}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{user?.fullName}</Text>
 
-            <View>
-                <Text>Informacion Adicional</Text>
-                <TextInput style={styles.comentarios} placeholder='Informacion Adicional'></TextInput>
-            </View>
+                    <Text style={{ fontWeight: 'regular', fontSize: 14 }}>Solve. Express</Text>
+                </View>
+
+                <View>
+                    <Text style={{ fontWeight: 'bold', fontSize: 26 }}>¿Cuánto dinero necesitas?</Text>
+                </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.box}>
+                        <Text>Días trabajados</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{diasTrabajados}</Text>
+                    </View>
+                    <View style={styles.box}>
+                        <Text>Tu adelanto disponible</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>${adelantoDisponible}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.boxCard}>
+                    <Text style={{ fontWeight: 'medium', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Solicitar:</Text>
+
+                    <MaskInput
+                        style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center', width: '90%', borderRadius: 36 }}
+                        value={'' + value}
+                        mask={dollarMask}
+                        onChangeText={(masked, unmasked) => {
+                            if (Number(unmasked) <= adelantoDisponible) {
+                                setValue(Number(unmasked));
+                            }
+                        }}
+                    />
+
+                    <Slider
+                        style={{ width: 300, height: 40 }}
+                        minimumValue={minAdelanto}
+                        maximumValue={adelantoDisponible}
+                        minimumTrackTintColor='#FF9400'
+                        maximumTrackTintColor='#EDEFF2'
+                        thumbTintColor='#FF9400'
+                        value={value}
+                        onValueChange={nwe => setValue(nwe)}
+                        step={1}
+                    />
+
+                    <Pressable style={styles.button}>
+                        <Text style={{ color: 'white' }}>Solicitar Adelanto</Text>
+                    </Pressable>
+                </View>
+
+                <View style={{ width: '100%', marginTop: 10 }}>
+                    <Text>Información Adicional</Text>
+                    <TextInput style={styles.comentarios} placeholder='Información Adicional'></TextInput>
+                </View>
+            </ScrollView>
         </View>
     );
 };
@@ -103,12 +107,21 @@ const styles = StyleSheet.create({
     body: {
         alignItems: 'center',
         // margin: 10,
-        // padding: 10,
+        padding: 0,
     },
     box: {
-        backgroundColor: 'white',
+        backgroundColor: '#ffffff',
         alignItems: 'center',
         // width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        margin: 10,
+        borderRadius: 8,
+    },
+    boxCard: {
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 10,
         margin: 10,
@@ -119,8 +132,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
         backgroundColor: '#EDEFF2',
         color: '#7E858C',
-        width: 400,
-        height: 200,
+        width: '100%',
+        height: 100,
+        borderWidth: 1,
+        borderRadius: 8,
     },
     button: {
         justifyContent: 'center',

@@ -7,8 +7,8 @@ const Stack = createStackNavigator<RootStackParams>();
 
 export function MyStack() {
     return (
-        <Stack.Navigator initialRouteName='LoadingScreen' screenOptions={{ headerShown: false }}>
-            <Stack.Screen name='LoadingScreen' component={LoadingScreen} />
+        <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
+            {/* <Stack.Screen name='LoadingScreen' component={LoadingScreen} /> */}
             <Stack.Screen name='Login' component={Login} />
             <Stack.Screen name='RegisterScreen' component={RegisterScreen} />
             <Stack.Screen name='RecuperarContraseñaScreen' component={RecuperarContraseñaScreen} />

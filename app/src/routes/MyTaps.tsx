@@ -11,6 +11,7 @@ export function MyTabs() {
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,
+                tabBarHideOnKeyboard: true,
                 tabBarShowLabel: false,
                 tabBarActiveBackgroundColor: '#73baff',
                 tabBarActiveTintColor: '#f2f2f2',
