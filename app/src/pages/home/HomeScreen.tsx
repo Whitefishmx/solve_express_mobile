@@ -46,10 +46,10 @@ export const HomeScreen = () => {
                 <View>
                     <Image style={styles.logo} source={require('./../../../../assets/images/LogoSolve.png')} />
                 </View>
-                <View style={styles.box}>
-                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{user?.fullName}</Text>
+                <View style={{...styles.box, width:'90%'}}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{user?.fullName}</Text>
 
-                    <Text style={{ fontWeight: 'regular', fontSize: 14 }}>{dashboard?.short_name}</Text>
+                    <Text style={{ fontWeight: 'regular', fontSize: 12 }}>{dashboard?.short_name}</Text>
                 </View>
 
                 <View>
@@ -108,8 +108,8 @@ export const HomeScreen = () => {
                 </View>
 
                 <View style={{ width: '100%', marginTop: 10 }}>
-                    <Text>Información Adicional</Text>
-                    <TextInput style={styles.comentarios} placeholder='Información Adicional'></TextInput>
+                    {/* <Text>Información Adicional</Text> */}
+                    <TextInput style={styles.comentarios} placeholder=''></TextInput>
                 </View>
             </View>
         </ScrollView>
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
         color: '#7E858C',
         width: '100%',
         height: 100,
-        borderWidth: 1,
         borderRadius: 8,
     },
     button: {
