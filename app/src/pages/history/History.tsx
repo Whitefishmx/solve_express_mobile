@@ -19,11 +19,11 @@ export const History = () => {
             <Text style={{ ...stylesG.titlePrimary, marginBottom: 10 }}>Adelantos solicitados.</Text>
             <View style={stylesG.boxHistory}>
                 {history?.map(info => (
-                    <View style={stylesG.boxDetail} key={info.noReference}>
+                    <View style={stylesG.boxDetail} key={info.reference_number}>
                         <Ionicons name='document-text-outline' size={32} style={{ marginRight: 15 }} />
                         <View>
                             <Text>Adelanto solicitado: {`$${info.requested_amount}`}</Text>
-                            <Text style={{ fontSize: 10 }}>{`${info['Fecha solicitud']}`}</Text>
+                            <Text style={{ fontSize: 10 }}>{`${info['created_at']}`}</Text>
                         </View>
                     </View>
                 ))}

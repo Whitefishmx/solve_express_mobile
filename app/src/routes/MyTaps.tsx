@@ -1,6 +1,6 @@
 // import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { History, HomeScreen, Profile } from '../pages';
+import { Alert, History, HomeScreen, Notificaciones, Profile } from '../pages';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TouchableOpacity } from 'react-native';
 
@@ -18,30 +18,30 @@ export function MyTabs() {
                 tabBarButton: props => <TouchableOpacity {...props} />,
             }}>
             <Tab.Screen
-                name='HomeScreen'
-                component={HomeScreen}
+                name='AlertsScreen'
+                component={Alert}
                 options={{
                     tabBarIcon: ({ color }) => <Ionicons name='notifications-outline' size={24} color={color} />,
                 }}
             />
             <Tab.Screen
-                name='HomeScreen3'
+                name='HistoryScreen'
                 component={History}
                 options={{ tabBarIcon: ({ color }) => <Ionicons name='document-text-outline' size={24} color={color} /> }}
             />
             <Tab.Screen
-                name='HomeScreen4'
+                name='HomeScreen'
                 component={HomeScreen}
                 options={{ tabBarIcon: ({ color }) => <Ionicons name='home-outline' size={24} color={color} /> }}
             />
             <Tab.Screen
-                name='HomeScreen5'
+                name='ProfileScreen'
                 component={Profile}
                 options={{ tabBarIcon: ({ color }) => <Ionicons name='person-circle-outline' size={24} color={color} /> }}
             />
             <Tab.Screen
-                name='HomeScreen6'
-                component={HomeScreen}
+                name='NotificacionesScreen'
+                component={Notificaciones}
                 options={{ tabBarIcon: ({ color }) => <Ionicons name='chatbox-outline' size={24} color={color} /> }}
             />
         </Tab.Navigator>

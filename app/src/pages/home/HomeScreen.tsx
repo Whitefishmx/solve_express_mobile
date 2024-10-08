@@ -44,12 +44,7 @@ export const HomeScreen = () => {
             <CerrarSesion />
             <View style={styles.body}>
                 <View>
-                    <Image
-                        style={styles.logo}
-                        source={{
-                            uri: 'https://lirp.cdn-website.com/5e3948ec/dms3rep/multi/opt/Logo+Solve+Express+750x250-1920w.png',
-                        }}
-                    />
+                    <Image style={styles.logo} source={require('./../../../../assets/images/LogoSolve.png')} />
                 </View>
                 <View style={styles.box}>
                     <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{user?.fullName}</Text>
@@ -126,6 +121,7 @@ const styles = StyleSheet.create({
         height: 80,
         width: 220,
         paddingHorizontal: 10,
+        marginTop: 30,
         marginBottom: 25,
         resizeMode: 'stretch',
         alignItems: 'center',
