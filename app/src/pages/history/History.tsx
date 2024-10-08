@@ -9,9 +9,11 @@ export const History = () => {
     const { getListReported } = useSolveStore();
     const { history } = useSolveStore();
     const { user } = useAuthStore();
+
     useEffect(() => {
         getListReported(Number(user?.id));
     }, []);
+
     return (
         <View style={stylesG.body}>
             <Text style={{ ...stylesG.titlePrimary, marginBottom: 10 }}>Adelantos solicitados.</Text>
