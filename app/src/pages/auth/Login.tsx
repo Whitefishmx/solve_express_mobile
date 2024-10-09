@@ -34,16 +34,10 @@ export const Login = ({ navigation }: Props) => {
     return (
         <View style={styles.login}>
             <View style={styles.head}>
-                <Image
-                    style={styles.logo}
-                    source={{
-                        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMF4YyD9ZC__DsCN6ZhVnSaQnCrqyuBremMAs9iabq0O5gh5IzoX7Fl8zk4rKnac8_eq8&usqp=CAU',
-                    }}
-                    resizeMode='stretch'
-                />
+                <Image style={styles.logo} source={require('./../../../../assets/images/LogoSolve.png')} resizeMode='stretch' />
                 <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Bienvenido a Solve Express</Text>
-                <Text>Accede a tu adelanto de salario de manera</Text>
-                <Text>rápida y segura.</Text>
+                <Text>¡Tu nómina al instante! Sin deuda y sin intereses.</Text>
+                {/* <Text>rápida y segura.</Text> */}
             </View>
 
             <View>
@@ -71,11 +65,11 @@ export const Login = ({ navigation }: Props) => {
                 </Pressable>
             </View>
 
-            <Pressable>
+            {/* <Pressable>
                 <View style={styles.registro}>
                     <Text style={{ fontWeight: '700' }}>Registrarse</Text>
                 </View>
-            </Pressable>
+            </Pressable> */}
 
             {/* <View style={styles.containerOr}>
                     <View style={styles.hairline} />
@@ -139,6 +133,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: '#3071FF',
         borderWidth: 1,
+        marginTop: 25,
     },
     logo: {
         height: 80,

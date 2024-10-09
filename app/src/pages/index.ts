@@ -5,3 +5,5 @@ export * from './loading/LoadingScreen';
 export * from './auth/RegisterScreen';
 export * from './history/History';
 export * from './profile/Profile';
+export * from './alert/Alert';
+export * from './not/Notificaciones';
