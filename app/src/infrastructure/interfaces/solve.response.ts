@@ -23,13 +23,14 @@ export interface SolveDashboard {
 }
 
 export interface Dashboard {
-    name?: string;
-    last_name?: string;
-    sure_name?: string;
-    short_name?: string;
-    net_salary?: string;
-    plan?: string;
+    name?:             string;
+    last_name?:        string;
+    sure_name?:        string;
+    short_name?:       string;
+    net_salary?:       string;
+    plan?:             string;
     amount_available?: string;
-    worked_days?: string;
-    aviable?: string;
+    worked_days?:      string;
+    available?:        string;
+    "min-available"?:  number;
 }

@@ -1,17 +1,19 @@
 import { useAuthStore } from '../../store/auth/useAuthStore';
-import { Text, TextInput, View, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { Text, TextInput, View, Image, StyleSheet, Pressable, ScrollView, useWindowDimensions } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Slider from '@react-native-community/slider';
 import MaskInput, { createNumberMask } from 'react-native-mask-input';
 import CerrarSesion from '../../components/CerrarSesion';
 import ConfirmacionModal from '../../components/ConfirmacionModal';
 import { useSolveStore } from '../../store/solve/useSolveStore';
+import { Ionicons } from '@expo/vector-icons';
 
 export const HomeScreen = () => {
     // const { logout } = useAuthStore();
     const { user } = useAuthStore();
 
     const { dashboard, getDashboard } = useSolveStore();
+    const { height, width } = useWindowDimensions();
 
     useEffect(() => {
         getDashboard(Number(user?.id));
@@ -19,7 +21,7 @@ export const HomeScreen = () => {
 
     const adelantoDisponible = 2000;
     const adelantoSolicitado = 250;
-    const minAdelanto = 250;
+    const minAdelanto = dashboard?.['min-available'];
 
     const [value, setValue] = useState(adelantoSolicitado);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,29 +48,32 @@ export const HomeScreen = () => {
                 <View>
                     <Image style={styles.logo} source={require('./../../../../assets/images/LogoSolve.png')} />
                 </View>
-                <View style={{...styles.box, width:'90%'}}>
+                <View style={{ ...styles.boxTitle, width: width * 0.9 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{user?.fullName}</Text>
 
                     <Text style={{ fontWeight: 'regular', fontSize: 12 }}>{dashboard?.short_name}</Text>
                 </View>
 
                 <View>
-                    <Text style={{ fontWeight: 'bold', fontSize: 26 }}>¿Cuánto dinero necesitas?</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 26, marginVertical: 15 }}>¿Cuánto dinero necesitas?</Text>
                 </View>
 
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={styles.box}>
+                <View style={{ flexDirection: 'row', width: width * 0.9, justifyContent: 'space-between' }}>
+                    <View style={{ ...styles.box, marginLeft: 0, width: width * 0.4 }}>
                         <Text>Días trabajados</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{dashboard?.worked_days}</Text>
+                        <View style={{display: 'flex', alignItems: 'center', flexDirection:'row' }}>
+                            <Ionicons name='calendar-outline' size={24} color={'#343d47'} style={{ marginRight: 10 }} />
+                            <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{dashboard?.worked_days}</Text>
+                        </View>
                     </View>
-                    <View style={styles.box}>
-                        <Text>Tu adelanto disponible</Text>
+                    <View style={{ ...styles.box, marginRight: 0, marginLeft: 0, width: width * 0.4 }}>
+                        <Text>Monto disponible</Text>
                         <Text style={{ fontWeight: 'bold', fontSize: 24 }}>${dashboard?.amount_available}</Text>
                     </View>
                 </View>
 
-                <View style={styles.boxCard}>
-                    <Text style={{ fontWeight: 'medium', fontSize: 16, textAlign: 'center', marginBottom: 10 }}>Solicitar:</Text>
+                <View style={{ ...styles.boxCard, width: width * 0.9 }}>
+                    <Text style={{ fontWeight: 'medium', fontSize: 24, textAlign: 'center', marginBottom: 10 }}>Solicitar</Text>
 
                     <MaskInput
                         style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center', width: '90%', borderRadius: 36 }}
@@ -107,9 +112,9 @@ export const HomeScreen = () => {
                     <ConfirmacionModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} value={value} />
                 </View>
 
-                <View style={{ width: '100%', marginTop: 10 }}>
+                <View style={{ width: width*.9, marginTop: 10 }}>
                     {/* <Text>Información Adicional</Text> */}
-                    <TextInput style={styles.comentarios} placeholder=''></TextInput>
+                    <TextInput style={styles.comentarios} placeholder='' editable={false} selectTextOnFocus={false}></TextInput>
                 </View>
             </View>
         </ScrollView>
@@ -121,16 +126,24 @@ const styles = StyleSheet.create({
         height: 80,
         width: 220,
         paddingHorizontal: 10,
-        marginTop: 30,
         marginBottom: 25,
         resizeMode: 'stretch',
         alignItems: 'center',
     },
     body: {
         alignItems: 'center',
-        padding: 0,
+        padding: 10,
     },
     box: {
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        // width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        margin: 10,
+        borderRadius: 8,
+    },
+    boxTitle: {
         backgroundColor: '#ffffff',
         alignItems: 'center',
         // width: '100%',
@@ -142,9 +155,10 @@ const styles = StyleSheet.create({
     boxCard: {
         backgroundColor: '#ffffff',
         alignItems: 'center',
-        width: '100%',
+        // width: '100%',
         paddingHorizontal: 20,
-        paddingVertical: 10,
+        paddingVertical: 55,
+        marginTop: 30,
         margin: 10,
         borderRadius: 8,
     },
