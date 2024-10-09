@@ -7,7 +7,6 @@ const returnUserDataToken = (data: AuthResponse) => {
     const user: User = {
         id: data.user.data.id,
         email: data.user.data.email,
-        fullName: data.user.data.email,
         fullName: `${data.user.data.name} ${data.user.data.last_name}`,
         NetSalary: data.user.data.net_salary,
         isActive: data.logged_in,

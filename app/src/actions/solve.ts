@@ -1,5 +1,6 @@
 import { providerApi } from '../config/api/providerApi';
-import { SolveReportResponse } from '../infrastructure';
+import { SolveDashboard, SolveReportResponse } from '../infrastructure';
+
 export const getListReported = async (id: number) => {
     try {
         const { data } = await providerApi.post<SolveReportResponse>('/sExpressReport', { user: id });
@@ -7,5 +8,15 @@ export const getListReported = async (id: number) => {
     } catch (error) {
         console.log(error);
         return [];
+    }
+};
+
+export const getDashboard = async (id: number) => {
+    try {
+        const { data } = await providerApi.post<SolveDashboard>('/sExpressDashboard', { user: id });
+        return data.response;
+    } catch (error) {
+        console.log(error);
+        return {};
     }
 };

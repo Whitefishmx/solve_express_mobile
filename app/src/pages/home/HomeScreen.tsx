@@ -1,16 +1,22 @@
 import { useAuthStore } from '../../store/auth/useAuthStore';
 import { Text, TextInput, View, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from '@react-native-community/slider';
 import MaskInput, { createNumberMask } from 'react-native-mask-input';
 import CerrarSesion from '../../components/CerrarSesion';
-import ConfirmacionModal from '../../components/ConfirmacionModal'
-
+import ConfirmacionModal from '../../components/ConfirmacionModal';
+import { useSolveStore } from '../../store/solve/useSolveStore';
 
 export const HomeScreen = () => {
     // const { logout } = useAuthStore();
     const { user } = useAuthStore();
-    const diasTrabajados = 4;
+
+    const { dashboard, getDashboard } = useSolveStore();
+
+    useEffect(() => {
+        getDashboard(Number(user?.id));
+    }, []);
+
     const adelantoDisponible = 2000;
     const adelantoSolicitado = 250;
     const minAdelanto = 250;
@@ -21,11 +27,21 @@ export const HomeScreen = () => {
 
     const dollarMask = createNumberMask({
         prefix: ['$'],
-        separator: '',
+        delimiter: '',
+        separator: '.',
+        precision: 2,
     });
+
+    const setFloatNumber = (number: number | string): string => {
+        if (typeof number === 'number') {
+            return number + '.00';
+        }
+        return number;
+    };
+
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
-            <CerrarSesion/>
+            <CerrarSesion />
             <View style={styles.body}>
                 <View>
                     <Image
@@ -38,7 +54,7 @@ export const HomeScreen = () => {
                 <View style={styles.box}>
                     <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{user?.fullName}</Text>
 
-                    <Text style={{ fontWeight: 'regular', fontSize: 14 }}>Solve. Express</Text>
+                    <Text style={{ fontWeight: 'regular', fontSize: 14 }}>{dashboard?.short_name}</Text>
                 </View>
 
                 <View>
@@ -48,11 +64,11 @@ export const HomeScreen = () => {
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.box}>
                         <Text>Días trabajados</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{diasTrabajados}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{dashboard?.worked_days}</Text>
                     </View>
                     <View style={styles.box}>
                         <Text>Tu adelanto disponible</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>${adelantoDisponible}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>${dashboard?.amount_available}</Text>
                     </View>
                 </View>
 
@@ -61,11 +77,13 @@ export const HomeScreen = () => {
 
                     <MaskInput
                         style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center', width: '90%', borderRadius: 36 }}
-                        value={'' + value}
+                        value={setFloatNumber(value)}
                         mask={dollarMask}
                         onChangeText={(masked, unmasked) => {
-                            if (Number(unmasked) <= adelantoDisponible) {
-                                setValue(Number(unmasked));
+                            const num = parseFloat(masked.replace('$', ''));
+                            console.log(num);
+                            if (num <= adelantoDisponible) {
+                                setValue(num);
                             }
                         }}
                     />
@@ -73,23 +91,25 @@ export const HomeScreen = () => {
                     <Slider
                         style={{ width: 300, height: 40 }}
                         minimumValue={minAdelanto}
-                        maximumValue={adelantoDisponible}
+                        maximumValue={2000}
                         minimumTrackTintColor='#FF9400'
                         maximumTrackTintColor='#EDEFF2'
                         thumbTintColor='#FF9400'
                         value={value}
-                        onValueChange={nwe => setValue(nwe)}
+                        onValueChange={nwe => {
+                            setValue(nwe);
+                        }}
                         step={1}
                     />
 
-                    <Pressable style={styles.button} onPress={ ()=> {setIsModalOpen(!isModalOpen)}}>
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            setIsModalOpen(!isModalOpen);
+                        }}>
                         <Text style={{ color: 'white' }}>Solicitar Adelanto</Text>
                     </Pressable>
-                    <ConfirmacionModal
-                        isModalOpen={isModalOpen}
-                        setIsModalOpen={setIsModalOpen}
-                        value={value}
-                    />
+                    <ConfirmacionModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} value={value} />
                 </View>
 
                 <View style={{ width: '100%', marginTop: 10 }}>
@@ -155,7 +175,7 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        shadowOffset:{
+        shadowOffset: {
             width: 4,
             height: 4,
         },
