@@ -9,38 +9,28 @@ import { useSolveStore } from '../../store/solve/useSolveStore';
 import { Ionicons } from '@expo/vector-icons';
 
 export const HomeScreen = () => {
-    // const { logout } = useAuthStore();
     const { user } = useAuthStore();
 
     const { dashboard, getDashboard } = useSolveStore();
-    const { height, width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
     useEffect(() => {
         getDashboard(Number(user?.id));
     }, []);
 
-    const adelantoDisponible = 2000;
-    const adelantoSolicitado = 250;
+    const adelantoDisponible = dashboard?.amount_available;
+    const adelantoSolicitado = dashboard?.['min-available'] + '.00';
     const minAdelanto = dashboard?.['min-available'];
 
-    const [value, setValue] = useState(adelantoSolicitado);
+    const [value, setValue] = useState('' + adelantoSolicitado);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // console.log(value);
 
     const dollarMask = createNumberMask({
         prefix: ['$'],
-        delimiter: '',
         separator: '.',
+        delimiter: ',',
         precision: 2,
     });
-
-    const setFloatNumber = (number: number | string): string => {
-        if (typeof number === 'number') {
-            return number + '.00';
-        }
-        return number;
-    };
-
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
             <CerrarSesion />
@@ -61,7 +51,7 @@ export const HomeScreen = () => {
                 <View style={{ flexDirection: 'row', width: width * 0.9, justifyContent: 'space-between' }}>
                     <View style={{ ...styles.box, marginLeft: 0, width: width * 0.4 }}>
                         <Text>Días trabajados</Text>
-                        <View style={{display: 'flex', alignItems: 'center', flexDirection:'row' }}>
+                        <View style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
                             <Ionicons name='calendar-outline' size={24} color={'#343d47'} style={{ marginRight: 10 }} />
                             <Text style={{ fontWeight: 'bold', fontSize: 24 }}>{dashboard?.worked_days}</Text>
                         </View>
@@ -77,27 +67,25 @@ export const HomeScreen = () => {
 
                     <MaskInput
                         style={{ fontWeight: 'bold', fontSize: 36, textAlign: 'center', width: '90%', borderRadius: 36 }}
-                        value={setFloatNumber(value)}
+                        value={'' + value}
                         mask={dollarMask}
                         onChangeText={(masked, unmasked) => {
-                            const num = parseFloat(masked.replace('$', ''));
-                            console.log(num);
-                            if (num <= adelantoDisponible) {
-                                setValue(num);
-                            }
+                            // console.log(masked);
+
+                            setValue(masked);
                         }}
                     />
 
                     <Slider
                         style={{ width: 300, height: 40 }}
-                        minimumValue={minAdelanto}
-                        maximumValue={2000}
+                        minimumValue={Number(minAdelanto)}
+                        maximumValue={Number(adelantoDisponible)}
                         minimumTrackTintColor='#FF9400'
                         maximumTrackTintColor='#EDEFF2'
                         thumbTintColor='#FF9400'
-                        value={value}
-                        onValueChange={nwe => {
-                            setValue(nwe);
+                        value={value.toString().includes('$') ? Number(value.toString().replace('$', '').replace(',', '')) : Number(value)}
+                        onValueChange={req => {
+                            setValue(req.toString().includes('.') ? req.toString() : `$${req}.00`);
                         }}
                         step={1}
                     />
@@ -112,7 +100,7 @@ export const HomeScreen = () => {
                     <ConfirmacionModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} value={value} />
                 </View>
 
-                <View style={{ width: width*.9, marginTop: 10 }}>
+                <View style={{ width: width * 0.9, marginTop: 10 }}>
                     {/* <Text>Información Adicional</Text> */}
                     <TextInput style={styles.comentarios} placeholder='' editable={false} selectTextOnFocus={false}></TextInput>
                 </View>
