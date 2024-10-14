@@ -35,9 +35,8 @@ export const Login = ({ navigation }: Props) => {
         <View style={styles.login}>
             <View style={styles.head}>
                 <Image style={styles.logo} source={require('./../../../../assets/images/LogoSolve.png')} resizeMode='stretch' />
-                <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Bienvenido a Solve Express</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 5 }}>Bienvenido a Solve Express</Text>
                 <Text>¡Tu nómina al instante! Sin deuda y sin intereses.</Text>
-                {/* <Text>rápida y segura.</Text> */}
             </View>
 
             <View>
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         padding: 10,
         color: '#7E858C',
-        backgroundColor: '#EDEFF2',
+        backgroundColor: '#e2e7ed',
         borderRadius: 5,
         textTransform: 'uppercase',
     },
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     login: {
-        margin: 20,
+        margin: 0,
         padding: 20,
     },
     head: {

@@ -7,6 +7,7 @@ import CerrarSesion from '../../components/CerrarSesion';
 import ConfirmacionModal from '../../components/ConfirmacionModal';
 import { useSolveStore } from '../../store/solve/useSolveStore';
 import { Ionicons } from '@expo/vector-icons';
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 
 export const HomeScreen = () => {
     const { user } = useAuthStore();
@@ -19,7 +20,7 @@ export const HomeScreen = () => {
         return number?.toString().includes('.') ? number.toString() : `$${number}.00`;
     };
 
-    const [value, setValue] = useState(formatNumberToMask(dashboard?.['min-available']));
+    const [value, setValue] = useState('$0.00');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const dollarMask = createNumberMask({
@@ -34,6 +35,14 @@ export const HomeScreen = () => {
             getDashboard(Number(user?.id));
         }
     }, [user?.id]);
+
+    useEffect(() => {
+        if (dashboard) {
+            setValue(formatNumberToMask(dashboard?.['min-available']))
+        }
+    }, [dashboard])
+    
+
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
             <CerrarSesion />
@@ -77,19 +86,23 @@ export const HomeScreen = () => {
                         }}
                     />
 
-                    <Slider
-                        style={{ width: 300, height: 40 }}
-                        minimumValue={Number(dashboard?.['min-available'])}
-                        maximumValue={Number(dashboard?.amount_available)}
-                        minimumTrackTintColor='#FF9400'
-                        maximumTrackTintColor='#EDEFF2'
-                        thumbTintColor='#FF9400'
-                        value={value.toString().includes('$') ? Number(value.toString().replace('$', '').replace(',', '')) : Number(value)}
-                        onValueChange={req => {
-                            setValue(formatNumberToMask(req));
-                        }}
-                        step={1}
-                    />
+                    {dashboard ? (
+                        <Slider
+                            style={{ width: 300, height: 40 }}
+                            minimumValue={dashboard?.['min-available'] ? Number(dashboard?.['min-available']) : 0}
+                            maximumValue={dashboard?.amount_available ? Number(dashboard?.amount_available) : 0}
+                            minimumTrackTintColor='#FF9400'
+                            maximumTrackTintColor='#EDEFF2'
+                            thumbTintColor='#FF9400'
+                            value={value.toString().includes('$') ? Number(value.toString().replace('$', '').replace(',', '')) : Number(value)}
+                            onValueChange={req => {
+                                setValue(formatNumberToMask(req.toFixed(2)));
+                            }}
+                            step={1}
+                        />
+                    ) : (
+                        <ActivityIndicator animating={true} color={MD2Colors.red800} size={'large'} />
+                    )}
 
                     <Pressable
                         style={styles.button}
@@ -98,7 +111,7 @@ export const HomeScreen = () => {
                         }}>
                         <Text style={{ color: 'white' }}>Solicitar Adelanto</Text>
                     </Pressable>
-                    <ConfirmacionModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} value={value} />
+                    <ConfirmacionModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} value={value}/>
                 </View>
 
                 <View style={{ width: width * 0.9, marginTop: 10 }}>

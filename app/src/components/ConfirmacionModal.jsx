@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { Component } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import Modal from 'react-native-modal';
-import MaskInput, { createNumberMask } from 'react-native-mask-input';
+import { createNumberMask } from 'react-native-mask-input';
 
 export default function ConfirmacionModal({ isModalOpen, setIsModalOpen, value }) {
-    // const [modalHistorial, setModalHistorial] = useState(false)
-
     const tarifa = 70;
     const totalDeposito = value.toString().includes('$')
         ? Number(value.toString().replace('$', '').replace(',', '')) - Number(tarifa)
         : Number(value) - Number(tarifa);
+
+    const formatNumberToMask = number => {
+        if (!number) return `$00.00`;
+        return number?.toString().includes('.') ? `$${number.toString().replace('$', '')}` : `$${number}.00`;
+    };
 
     const dollarMask = createNumberMask({
         prefix: ['$'],
@@ -37,9 +39,9 @@ export default function ConfirmacionModal({ isModalOpen, setIsModalOpen, value }
                                 <Text>Recibes en tu cuenta</Text>
                             </View>
                             <View style={{ width: '25%' }}>
-                                <Text>{value}</Text>
-                                <Text style={{ fontWeight: 'bold' }}>${tarifa}.00</Text>
-                                <Text style={{ fontWeight: 'bold', marginBottom: 20 }}>${totalDeposito}.00</Text>
+                                <Text>{formatNumberToMask(value)}</Text>
+                                <Text style={{ fontWeight: 'bold' }}>{formatNumberToMask(tarifa)}</Text>
+                                <Text style={{ fontWeight: 'bold', marginBottom: 20 }}>{formatNumberToMask(totalDeposito)}</Text>
                             </View>
                         </View>
 
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         borderColor: '#7E858C',
         borderRadius: 20,
-        borderWidth: 1,
+        // borderWidth: 1,
     },
     button: {
         justifyContent: 'center',
