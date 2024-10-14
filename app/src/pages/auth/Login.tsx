@@ -5,6 +5,7 @@ import InputPassword from '../../components/InputPassword';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../../infrastructure/interfaces/navigation';
 import { useAuthStore } from '../../store/auth/useAuthStore';
+import { stylesG } from '../../theme/apptheme';
 
 interface Props extends StackScreenProps<RootStackParams, 'Login'> {}
 
@@ -42,7 +43,7 @@ export const Login = ({ navigation }: Props) => {
 
             <View>
                 <TextInput
-                    style={styles.inputIngreso}
+                    style={stylesG.inputIngreso}
                     placeholder='RFC'
                     maxLength={13}
                     value={form.rfc}
@@ -60,16 +61,18 @@ export const Login = ({ navigation }: Props) => {
                 </Pressable>
                 {/* <Text>{JSON.stringify(form, null, 2)}</Text>
                 <Text>{process.env.EXPO_PUBLIC_API_URL_DEV}</Text> */}
-                <Pressable style={styles.button} onPress={onLogin} disabled={isPosting}>
+                <Pressable style={stylesG.button} onPress={onLogin} disabled={isPosting}>
                     <Text style={{ color: 'white' }}>Iniciar Sesión</Text>
                 </Pressable>
             </View>
 
-            {/* <Pressable>
-                <View style={styles.registro}>
+            <Pressable 
+                onPress={() => navigation.navigate('RegisterScreen')}
+            >
+                <View style={stylesG.registro}>
                     <Text style={{ fontWeight: '700' }}>Registrarse</Text>
                 </View>
-            </Pressable> */}
+            </Pressable>
 
             {/* <View style={styles.containerOr}>
                     <View style={styles.hairline} />
@@ -107,7 +110,7 @@ export const Login = ({ navigation }: Props) => {
                 </Pressable>
                 <Text style={{ fontSize: 12 }}> | </Text>
                 <Pressable>
-                    <Text style={{ fontSize: 12 }}>Politica de Privacidad</Text>
+                    <Text style={{ fontSize: 12 }}>Política de Privacidad</Text>
                 </Pressable>
             </View>
         </View>
@@ -115,26 +118,6 @@ export const Login = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
-    inputIngreso: {
-        height: 40,
-        marginVertical: 8,
-        padding: 10,
-        color: '#7E858C',
-        backgroundColor: '#EDEFF2',
-        borderRadius: 5,
-        textTransform: 'uppercase',
-    },
-    button: {
-        backgroundColor: '#6AB3F3',
-        borderBottomColor: '#3071FF',
-        alignItems: 'center',
-        paddingVertical: 14,
-        marginHorizontal: 40,
-        borderRadius: 5,
-        borderColor: '#3071FF',
-        borderWidth: 1,
-        marginTop: 25,
-    },
     logo: {
         height: 80,
         width: 220,
@@ -158,11 +141,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 10,
         justifyContent: 'center',
-    },
-    registro: {
-        paddingTop: 10,
-        marginVertical: 20,
-        alignItems: 'center',
     },
     containerOr: {
         width: '100%',

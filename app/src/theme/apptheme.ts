@@ -27,4 +27,28 @@ export const stylesG = StyleSheet.create({
         paddingVertical: 5,
         marginBottom: 10,
     },
+    inputIngreso: {
+        height: 40,
+        marginVertical: 8,
+        padding: 10,
+        color: '#7E858C',
+        backgroundColor: '#EDEFF2',
+        borderRadius: 5,
+    },
+    button: {
+        backgroundColor: '#6AB3F3',
+        borderBottomColor: '#3071FF',
+        alignItems: 'center',
+        paddingVertical: 14,
+        marginHorizontal: 40,
+        borderRadius: 5,
+        borderColor: '#3071FF',
+        borderWidth: 1,
+        marginTop: 25,
+    },
+    registro: {
+        paddingTop: 10,
+        marginVertical: 20,
+        alignItems: 'center',
+    }
 });
