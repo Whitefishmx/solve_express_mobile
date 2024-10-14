@@ -38,10 +38,9 @@ export const HomeScreen = () => {
 
     useEffect(() => {
         if (dashboard) {
-            setValue(formatNumberToMask(dashboard?.['min-available']))
+            setValue(formatNumberToMask(dashboard?.['min-available']));
         }
-    }, [dashboard])
-    
+    }, [dashboard]);
 
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
@@ -86,23 +85,19 @@ export const HomeScreen = () => {
                         }}
                     />
 
-                    {dashboard ? (
-                        <Slider
-                            style={{ width: 300, height: 40 }}
-                            minimumValue={dashboard?.['min-available'] ? Number(dashboard?.['min-available']) : 0}
-                            maximumValue={dashboard?.amount_available ? Number(dashboard?.amount_available) : 0}
-                            minimumTrackTintColor='#FF9400'
-                            maximumTrackTintColor='#EDEFF2'
-                            thumbTintColor='#FF9400'
-                            value={value.toString().includes('$') ? Number(value.toString().replace('$', '').replace(',', '')) : Number(value)}
-                            onValueChange={req => {
-                                setValue(formatNumberToMask(req.toFixed(2)));
-                            }}
-                            step={1}
-                        />
-                    ) : (
-                        <ActivityIndicator animating={true} color={MD2Colors.red800} size={'large'} />
-                    )}
+                    <Slider
+                        style={{ width: 300, height: 40 }}
+                        minimumValue={dashboard?.['min-available'] ? Number(dashboard?.['min-available']) : 0}
+                        maximumValue={dashboard?.amount_available ? Number(dashboard?.amount_available) : 0}
+                        minimumTrackTintColor='#FF9400'
+                        maximumTrackTintColor='#EDEFF2'
+                        thumbTintColor='#FF9400'
+                        value={value.toString().includes('$') ? Number(value.toString().replace('$', '').replace(',', '')) : Number(value)}
+                        onValueChange={req => {
+                            setValue(formatNumberToMask(req.toFixed(2)));
+                        }}
+                        step={1}
+                    />
 
                     <Pressable
                         style={styles.button}
@@ -111,7 +106,7 @@ export const HomeScreen = () => {
                         }}>
                         <Text style={{ color: 'white' }}>Solicitar Adelanto</Text>
                     </Pressable>
-                    <ConfirmacionModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} value={value}/>
+                    <ConfirmacionModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} value={value} />
                 </View>
 
                 <View style={{ width: width * 0.9, marginTop: 10 }}>
