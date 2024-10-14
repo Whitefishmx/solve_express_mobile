@@ -8,7 +8,9 @@ export default function ConfirmacionModal({ isModalOpen, setIsModalOpen, value }
     // const [modalHistorial, setModalHistorial] = useState(false)
 
     const tarifa = 70;
-    const totalDeposito = value - tarifa;
+    const totalDeposito = value.toString().includes('$')
+        ? Number(value.toString().replace('$', '').replace(',', '')) - Number(tarifa)
+        : Number(value) - Number(tarifa);
 
     const dollarMask = createNumberMask({
         prefix: ['$'],
@@ -29,44 +31,15 @@ export default function ConfirmacionModal({ isModalOpen, setIsModalOpen, value }
                         <Text style={{ fontWeight: 'bold', fontSize: 32, marginBottom: 20 }}>Confirma tu monto</Text>
 
                         <View style={{ flexDirection: 'row' }}>
-                            <View style={{ width: '80%' }}>
+                            <View style={{ width: '70%' }}>
                                 <Text>Monto Adelanto</Text>
                                 <Text>Tarifa por disposición</Text>
                                 <Text>Recibes en tu cuenta</Text>
                             </View>
-                            <View style={{ width: '15%' }}>
-                                <MaskInput
-                                    style={{ fontWeight: 'bold' }}
-                                    value={'' + value}
-                                    mask={dollarMask}
-                                    onChangeText={(masked, unmasked) => {
-                                        if (Number(unmasked) <= adelantoDisponible) {
-                                            setValue(Number(unmasked)); // you can use the masked value as well
-                                        }
-                                    }}
-                                />
-
-                                <MaskInput
-                                    style={{ fontWeight: 'bold' }}
-                                    value={'' + tarifa}
-                                    mask={dollarMask}
-                                    onChangeText={(masked, unmasked) => {
-                                        if (Number(unmasked) <= tarifa) {
-                                            setValue(Number(unmasked)); // you can use the masked value as well
-                                        }
-                                    }}
-                                />
-
-                                <MaskInput
-                                    style={{ fontWeight: 'bold', marginBottom: 20 }}
-                                    value={'' + totalDeposito}
-                                    mask={dollarMask}
-                                    onChangeText={(masked, unmasked) => {
-                                        if (Number(unmasked) <= totalDeposito) {
-                                            setValue(Number(unmasked)); // you can use the masked value as well
-                                        }
-                                    }}
-                                />
+                            <View style={{ width: '25%' }}>
+                                <Text>{value}</Text>
+                                <Text style={{ fontWeight: 'bold' }}>${tarifa}.00</Text>
+                                <Text style={{ fontWeight: 'bold', marginBottom: 20 }}>${totalDeposito}.00</Text>
                             </View>
                         </View>
 

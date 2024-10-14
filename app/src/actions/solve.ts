@@ -20,3 +20,13 @@ export const getDashboard = async (id: number) => {
         return {};
     }
 };
+
+export const requestPayment = async (id: number, amount: number) => {
+    try {
+        const { data } = await providerApi.post<SolveDashboard>('/sExpressRequest', { user: id, amount });
+        return data.response;
+    } catch (error) {
+        console.log(error);
+        return {};
+    }
+};

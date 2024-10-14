@@ -14,15 +14,12 @@ export const HomeScreen = () => {
     const { dashboard, getDashboard } = useSolveStore();
     const { width } = useWindowDimensions();
 
-    useEffect(() => {
-        getDashboard(Number(user?.id));
-    }, []);
+    const formatNumberToMask = (number: number | string | undefined) => {
+        if (!number) return `$00.00`;
+        return number?.toString().includes('.') ? number.toString() : `$${number}.00`;
+    };
 
-    const adelantoDisponible = dashboard?.amount_available;
-    const adelantoSolicitado = dashboard?.['min-available'] + '.00';
-    const minAdelanto = dashboard?.['min-available'];
-
-    const [value, setValue] = useState('' + adelantoSolicitado);
+    const [value, setValue] = useState(formatNumberToMask(dashboard?.['min-available']));
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const dollarMask = createNumberMask({
@@ -31,6 +28,12 @@ export const HomeScreen = () => {
         delimiter: ',',
         precision: 2,
     });
+
+    useEffect(() => {
+        if (user?.id) {
+            getDashboard(Number(user?.id));
+        }
+    }, [user?.id]);
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
             <CerrarSesion />
@@ -70,22 +73,20 @@ export const HomeScreen = () => {
                         value={'' + value}
                         mask={dollarMask}
                         onChangeText={(masked, unmasked) => {
-                            // console.log(masked);
-
                             setValue(masked);
                         }}
                     />
 
                     <Slider
                         style={{ width: 300, height: 40 }}
-                        minimumValue={Number(minAdelanto)}
-                        maximumValue={Number(adelantoDisponible)}
+                        minimumValue={Number(dashboard?.['min-available'])}
+                        maximumValue={Number(dashboard?.amount_available)}
                         minimumTrackTintColor='#FF9400'
                         maximumTrackTintColor='#EDEFF2'
                         thumbTintColor='#FF9400'
                         value={value.toString().includes('$') ? Number(value.toString().replace('$', '').replace(',', '')) : Number(value)}
                         onValueChange={req => {
-                            setValue(req.toString().includes('.') ? req.toString() : `$${req}.00`);
+                            setValue(formatNumberToMask(req));
                         }}
                         step={1}
                     />
