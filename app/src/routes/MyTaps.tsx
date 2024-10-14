@@ -9,6 +9,7 @@ const Tab = createBottomTabNavigator();
 export function MyTabs() {
     return (
         <Tab.Navigator
+            initialRouteName='HomeScreen'
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,

@@ -13,16 +13,14 @@ export default function InputPassword({ form, setForm }) {
                 secureTextEntry={hidePass ? true : false}
                 autoCapitalize='none'
                 value={form.password}
-                onChangeText={password => setForm({...form, password})}
+                onChangeText={password => setForm({ ...form, password })}
             />
 
-            <Pressable onPress={() => setHidePass(!hidePass)}>
+            <Pressable style={{ display: 'flex', justifyContent: 'center', position: 'absolute', right: 10 }} onPress={() => setHidePass(!hidePass)}>
                 <Image
                     style={styles.imageButton}
                     source={
-                        hidePass === true
-                            ? require('../../../assets/images/ic_hide_password.png')
-                            : require('../../../assets/images/ic_show_password.png')
+                        hidePass ? require('../../../assets/images/ic_hide_password.png') : require('../../../assets/images/ic_show_password.png')
                     }
                     resizeMode='stretch'
                 />
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 5,
         alignItems: 'center',
-        backgroundColor: '#EDEFF2',
+        backgroundColor: '#e2e7ed',
         paddingRight: 10,
     },
     imageButton: {
