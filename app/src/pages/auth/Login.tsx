@@ -14,7 +14,7 @@ export const Login = ({ navigation }: Props) => {
     const { login } = useAuthStore();
 
     const [form, setForm] = useState({
-        rfc: 'MALU970621T16',
+        rfc: 'MALU970621HHGGGR02',
         password: 'Pass1234',
     });
     const [isPosting, setIsPosting] = useState(false);
@@ -36,16 +36,15 @@ export const Login = ({ navigation }: Props) => {
         <View style={styles.login}>
             <View style={styles.head}>
                 <Image style={styles.logo} source={require('./../../../../assets/images/LogoSolve.png')} resizeMode='stretch' />
-                <Text style={{ fontWeight: 'bold', fontSize: 24 }}>Bienvenido a Solve Express</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 24, marginBottom: 5 }}>Bienvenido a Solve Express</Text>
                 <Text>¡Tu nómina al instante! Sin deuda y sin intereses.</Text>
-                {/* <Text>rápida y segura.</Text> */}
             </View>
 
             <View>
                 <TextInput
                     style={stylesG.inputIngreso}
-                    placeholder='RFC'
-                    maxLength={13}
+                    placeholder='CURP'
+                    maxLength={18}
                     value={form.rfc}
                     onChangeText={rfc => setForm({ ...form, rfc })}
                 />
@@ -59,8 +58,7 @@ export const Login = ({ navigation }: Props) => {
                         <Text>¿Olvidaste tu contraseña?</Text>
                     </View>
                 </Pressable>
-                {/* <Text>{JSON.stringify(form, null, 2)}</Text>
-                <Text>{process.env.EXPO_PUBLIC_API_URL_DEV}</Text> */}
+
                 <Pressable style={stylesG.button} onPress={onLogin} disabled={isPosting}>
                     <Text style={{ color: 'white' }}>Iniciar Sesión</Text>
                 </Pressable>
@@ -74,35 +72,6 @@ export const Login = ({ navigation }: Props) => {
                 </View>
             </Pressable>
 
-            {/* <View style={styles.containerOr}>
-                    <View style={styles.hairline} />
-
-                    <Text style={styles.or}>OR</Text>
-
-                    <View style={styles.hairline} />
-                </View>
-
-                <View style={{ width: '100%' }}>
-                    <View style={styles.otroRegistro}>
-                        <Image
-                            style={styles.iconoRegistro}
-                            source={{
-                                uri: 'https://img.icons8.com/?size=512&id=17949&format=png'
-                            }}
-                        />
-                        <Text >Iniciar sesion con Google</Text>
-                    </View>
-                    <View style={styles.otroRegistro}>
-                        <Image
-                            style={styles.iconoRegistro}
-                            source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/512/0/747.png'
-                            }}
-                        />
-                        <Text>Iniciar sesion con Apple</Text>
-                    </View>
-
-                </View> */}
 
             <View style={styles.footer}>
                 <Pressable>
@@ -118,6 +87,26 @@ export const Login = ({ navigation }: Props) => {
 };
 
 const styles = StyleSheet.create({
+    inputIngreso: {
+        height: 40,
+        marginVertical: 8,
+        padding: 10,
+        color: '#7E858C',
+        backgroundColor: '#e2e7ed',
+        borderRadius: 5,
+        textTransform: 'uppercase',
+    },
+    button: {
+        backgroundColor: '#6AB3F3',
+        borderBottomColor: '#3071FF',
+        alignItems: 'center',
+        paddingVertical: 14,
+        marginHorizontal: 40,
+        borderRadius: 5,
+        borderColor: '#3071FF',
+        borderWidth: 1,
+        marginTop: 25,
+    },
     logo: {
         height: 80,
         width: 220,
@@ -125,7 +114,7 @@ const styles = StyleSheet.create({
         marginBottom: 25,
     },
     login: {
-        margin: 20,
+        margin: 0,
         padding: 20,
     },
     head: {

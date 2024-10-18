@@ -32,6 +32,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     checkStatus: async () => {
         const resp = await authCheckStatus();
         if (!resp) {
+            // TODO: cambiar el unauthenticated
             set({ status: 'authenticated', token: undefined, user: undefined });
             return;
         }

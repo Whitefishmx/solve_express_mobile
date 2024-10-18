@@ -29,7 +29,6 @@ export const authLogin = async (rfc: string, password: string) => {
 
 export const authCheckStatus = async () => {
     try {
-        // const { user } = useAuthStore();
         const { data } = await providerApi.post<AuthResponse>('/tokenAlive');
         return returnUserDataToken(data);
     } catch (error) {

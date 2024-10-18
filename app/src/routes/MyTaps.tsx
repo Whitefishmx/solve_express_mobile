@@ -9,6 +9,7 @@ const Tab = createBottomTabNavigator();
 export function MyTabs() {
     return (
         <Tab.Navigator
+            initialRouteName='HomeScreen'
             screenOptions={{
                 headerShown: false,
                 tabBarShowLabel: false,
@@ -39,11 +40,11 @@ export function MyTabs() {
                 component={Profile}
                 options={{ tabBarIcon: ({ color }) => <Ionicons name='person-circle-outline' size={24} color={color} /> }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name='NotificacionesScreen'
                 component={Notificaciones}
                 options={{ tabBarIcon: ({ color }) => <Ionicons name='chatbox-outline' size={24} color={color} /> }}
-            />
+            /> */}
         </Tab.Navigator>
     );
 }
