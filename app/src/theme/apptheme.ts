@@ -32,7 +32,7 @@ export const stylesG = StyleSheet.create({
         marginVertical: 8,
         padding: 10,
         color: '#7E858C',
-        backgroundColor: '#EDEFF2',
+        backgroundColor: '#e2e7ed',
         borderRadius: 5,
     },
     button: {

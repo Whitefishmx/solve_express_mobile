@@ -7,7 +7,7 @@ import CerrarSesion from '../../components/CerrarSesion';
 import ConfirmacionModal from '../../components/ConfirmacionModal';
 import { useSolveStore } from '../../store/solve/useSolveStore';
 import { Ionicons } from '@expo/vector-icons';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { currencyFormatter } from '../../helpers/fuctions';
 
 export const HomeScreen = () => {
     const { user } = useAuthStore();
@@ -38,7 +38,7 @@ export const HomeScreen = () => {
 
     useEffect(() => {
         if (dashboard) {
-            setValue(formatNumberToMask(dashboard?.['min-available']));
+            setValue(formatNumberToMask(dashboard?.['min_available']));
         }
     }, [dashboard]);
 
@@ -69,7 +69,9 @@ export const HomeScreen = () => {
                     </View>
                     <View style={{ ...styles.box, marginRight: 0, marginLeft: 0, width: width * 0.4 }}>
                         <Text>Monto disponible</Text>
-                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>${dashboard?.amount_available}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 24 }}>
+                            {currencyFormatter({ currency: 'usd', value: dashboard?.amount_available! })}
+                        </Text>
                     </View>
                 </View>
 
@@ -87,14 +89,26 @@ export const HomeScreen = () => {
 
                     <Slider
                         style={{ width: 300, height: 40 }}
-                        minimumValue={dashboard?.['min-available'] ? Number(dashboard?.['min-available']) : 0}
+                        minimumValue={dashboard?.min_available ? Number(dashboard?.min_available) : 0}
                         maximumValue={dashboard?.amount_available ? Number(dashboard?.amount_available) : 0}
                         minimumTrackTintColor='#FF9400'
                         maximumTrackTintColor='#EDEFF2'
                         thumbTintColor='#FF9400'
-                        value={value.toString().includes('$') ? Number(value.toString().replace('$', '').replace(',', '')) : Number(value)}
+                        value={
+                            value.toString().includes('$')
+                                ? Number(
+                                      value.toString().includes('$') && value.length === 1 ? 1.0 : value.toString().replace('$', '').replace(',', '')
+                                  )
+                                : Number(value) === 0
+                                ? 1.0
+                                : Number(value)
+                        }
                         onValueChange={req => {
-                            setValue(formatNumberToMask(req.toFixed(2)));
+                            try {
+                                if (req) {
+                                    setValue(formatNumberToMask(req?.toFixed(2)));
+                                }
+                            } catch (error) {}
                         }}
                         step={1}
                     />

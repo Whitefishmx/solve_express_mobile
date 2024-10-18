@@ -23,6 +23,9 @@ export interface SolveDashboard {
 }
 
 export interface Dashboard {
+    userId?:           string;
+    personId?:         string;
+    employeeId?:       string;
     name?:             string;
     last_name?:        string;
     sure_name?:        string;
@@ -32,5 +35,5 @@ export interface Dashboard {
     amount_available?: string;
     worked_days?:      string;
     available?:        string;
-    "min-available"?:  number;
+    min_available?:    number;
 }

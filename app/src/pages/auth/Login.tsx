@@ -14,7 +14,7 @@ export const Login = ({ navigation }: Props) => {
     const { login } = useAuthStore();
 
     const [form, setForm] = useState({
-        rfc: 'MALU970621T16',
+        rfc: 'MALU970621HHGGGR02',
         password: 'Pass1234',
     });
     const [isPosting, setIsPosting] = useState(false);
@@ -43,8 +43,8 @@ export const Login = ({ navigation }: Props) => {
             <View>
                 <TextInput
                     style={stylesG.inputIngreso}
-                    placeholder='RFC'
-                    maxLength={13}
+                    placeholder='CURP'
+                    maxLength={18}
                     value={form.rfc}
                     onChangeText={rfc => setForm({ ...form, rfc })}
                 />
@@ -58,8 +58,7 @@ export const Login = ({ navigation }: Props) => {
                         <Text>¿Olvidaste tu contraseña?</Text>
                     </View>
                 </Pressable>
-                {/* <Text>{JSON.stringify(form, null, 2)}</Text>
-                <Text>{process.env.EXPO_PUBLIC_API_URL_DEV}</Text> */}
+
                 <Pressable style={stylesG.button} onPress={onLogin} disabled={isPosting}>
                     <Text style={{ color: 'white' }}>Iniciar Sesión</Text>
                 </Pressable>
@@ -73,35 +72,6 @@ export const Login = ({ navigation }: Props) => {
                 </View>
             </Pressable>
 
-            {/* <View style={styles.containerOr}>
-                    <View style={styles.hairline} />
-
-                    <Text style={styles.or}>OR</Text>
-
-                    <View style={styles.hairline} />
-                </View>
-
-                <View style={{ width: '100%' }}>
-                    <View style={styles.otroRegistro}>
-                        <Image
-                            style={styles.iconoRegistro}
-                            source={{
-                                uri: 'https://img.icons8.com/?size=512&id=17949&format=png'
-                            }}
-                        />
-                        <Text >Iniciar sesion con Google</Text>
-                    </View>
-                    <View style={styles.otroRegistro}>
-                        <Image
-                            style={styles.iconoRegistro}
-                            source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/512/0/747.png'
-                            }}
-                        />
-                        <Text>Iniciar sesion con Apple</Text>
-                    </View>
-
-                </View> */}
 
             <View style={styles.footer}>
                 <Pressable>
