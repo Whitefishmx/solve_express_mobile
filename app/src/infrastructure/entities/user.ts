@@ -4,4 +4,6 @@ export interface User {
     fullName: string;
     NetSalary: string;
     isActive: boolean;
+    curp: string;
+    rfc: string;
 }

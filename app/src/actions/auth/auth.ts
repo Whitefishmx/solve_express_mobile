@@ -10,6 +10,8 @@ const returnUserDataToken = (data: AuthResponse) => {
         fullName: `${data.user.data.name} ${data.user.data.last_name}`,
         NetSalary: data.user.data.net_salary,
         isActive: data.logged_in,
+        curp: data.user.data.curp,
+        rfc: data.user.data.rfc,
     };
     return {
         user,

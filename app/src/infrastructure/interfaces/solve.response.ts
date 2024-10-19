@@ -5,15 +5,24 @@ export interface SolveReportResponse {
 }
 
 export interface Response {
-    id?:               string;
-    employee_id?:      string;
-    folio?:            string;
-    reference_number?: string;
-    requested_amount?: string;
-    remaining_amount?: string;
-    period?:           string;
-    created_at?:       Date;
-    updated_at?:       Date | null;
+    name?:                string;
+    last_name?:           string;
+    sure_name?:           string;
+    rfc?:                 string;
+    external_id?:         string;
+    plan?:                string;
+    net_salary?:          string;
+    requested_amount?:    string;
+    remaining_amount?:    string;
+    period?:              string;
+    folio?:               string;
+    noReference?:         string;
+    cep?:                 null;
+    clabe?:               string;
+    card?:                null;
+    bnk_alias?:           string;
+    Fecha_solicitud?:     Date;
+    Ultima_modificacion?: Date;
 }
 
 export interface SolveDashboard {

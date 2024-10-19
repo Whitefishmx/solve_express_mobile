@@ -26,7 +26,7 @@ export const History = () => {
             <Text style={{ ...stylesG.titlePrimary, marginBottom: 10 }}>Adelantos solicitados.</Text>
             <View style={stylesG.boxHistory}>
                 {history?.map(info => (
-                    <Pressable style={stylesG.boxDetail} key={info.reference_number}
+                    <Pressable style={stylesG.boxDetail} key={info.noReference}
                         onPress={() => {
                             console.log(info)
                             setIsModalInfoOpen(info)
@@ -35,7 +35,7 @@ export const History = () => {
                         <Ionicons name='document-text-outline' size={32} style={{ marginRight: 15 }} />
                         <View>
                             <Text>Adelanto solicitado: {`$${info.requested_amount}`}</Text>
-                            <Text style={{ fontSize: 10 }}>{`${info['created_at']}`}</Text>
+                            <Text style={{ fontSize: 10 }}>{`${info.Fecha_solicitud}`}</Text>
                         </View>
                     </Pressable>
                 ))}
@@ -44,8 +44,8 @@ export const History = () => {
                     isModalOpen={isModalOpen}
                     setIsModalOpen={setIsModalOpen}
                     montoSolicitado={isModalInfoOpen.requested_amount}
-                    fechaSolicitud={isModalInfoOpen['created_at']}
-                    noReferencia={isModalInfoOpen.reference_number}
+                    fechaSolicitud={isModalInfoOpen.Fecha_solicitud}
+                    noReferencia={isModalInfoOpen.noReference}
                     restoSalario={isModalInfoOpen.remaining_amount}
 
                 />
