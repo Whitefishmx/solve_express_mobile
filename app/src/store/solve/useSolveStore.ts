@@ -33,5 +33,6 @@ export const useSolveStore = create<solveState>()((set, get) => ({
     },
     requestPayment: async (id: number, amount: number) => {
         const responsePayment = await requestPayment(id, amount);
+        console.log(responsePayment)
     },
 }));

@@ -2,8 +2,12 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
 import Modal from 'react-native-modal';
 import { createNumberMask } from 'react-native-mask-input';
+import { useAuthStore } from '../store/auth/useAuthStore';
+import { requestPayment } from '../actions/solve';
 
 export default function ConfirmacionModal({ isModalOpen, setIsModalOpen, value }) {
+    const { user } = useAuthStore();
+
     const tarifa = 70;
     const totalDeposito = value.toString().includes('$')
         ? Number(value.toString().replace('$', '').replace(',', '')) - Number(tarifa)
@@ -18,6 +22,10 @@ export default function ConfirmacionModal({ isModalOpen, setIsModalOpen, value }
         prefix: ['$'],
         separator: '',
     });
+
+    const onRequestPayment = async (id, amount) => {
+        const respPayment = await requestPayment(id, Number(amount.replace(',', '').replace('$', '')));
+    };
 
     return (
         <>
@@ -41,14 +49,14 @@ export default function ConfirmacionModal({ isModalOpen, setIsModalOpen, value }
                             <View style={{ width: '25%' }}>
                                 <Text>{formatNumberToMask(value)}</Text>
                                 <Text style={{ fontWeight: 'bold' }}>{formatNumberToMask(tarifa)}</Text>
-                                <Text style={{ fontWeight: 'bold', marginBottom: 20 }}>{formatNumberToMask(totalDeposito)}</Text>
+                                <Text style={{ fontWeight: 'bold', marginBottom: 20 }}>{formatNumberToMask(totalDeposito.toFixed(2))}</Text>
                             </View>
                         </View>
 
                         <Pressable
                             style={styles.button}
                             // onPress={ ()=> {setModalHistorial(!modalHistorial)}}
-                        >
+                            onPress={() => onRequestPayment(user.id, value)}>
                             <Text style={{ color: 'white', fontWeight: 'bold' }}>Confirmar</Text>
                         </Pressable>
                         {/* <HistorialModal

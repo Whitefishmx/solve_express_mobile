@@ -4,8 +4,8 @@ import { SVGComponent } from '../../components/index';
 import { useAuthStore } from '../../store/auth/useAuthStore';
 
 export const Profile = () => {
-
     const { user } = useAuthStore();
+    const { logout } = useAuthStore();
 
     const numberWhatsApp = 7716773869;
     const link: string = `https://api.whatsapp.com/send?phone=+${numberWhatsApp}`;
@@ -26,11 +26,11 @@ export const Profile = () => {
     return (
         <View style={{ ...stylesG.body, width: width, height: height }}>
             <View>
-                <Text style={stylesG.titlePrimary}>Perfil de Usuario</Text>
+                <Text style={{ ...stylesG.titlePrimary, marginBottom: 40 }}>Perfil de Usuario</Text>
             </View>
-            <View>
+            {/* <View>
                 <Text style={styles.usuarioText}>{user?.fullName}</Text>
-            </View>
+            </View> */}
             <View>
                 <Text style={styles.subtitulo}>Información Personal</Text>
             </View>
@@ -45,13 +45,16 @@ export const Profile = () => {
                 </View>
                 <View style={styles.container}>
                     <Text>Teléfono</Text>
-                    <Text style={styles.datos}>7742255</Text>
+                    <Text style={styles.datos}>{user?.rfc}</Text>
                 </View>
                 <View style={styles.container}>
                     <Text>CURP</Text>
-                    <Text style={styles.datos}>dfghjk</Text>
+                    <Text style={styles.datos}>{user?.curp}</Text>
                 </View>
             </View>
+            <Pressable style={{ ...styles.btnCloseSesion, width: width * 0.9 }} onPress={logout}>
+                <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 600 }}>Cerrar Sesion</Text>
+            </Pressable>
 
             <Pressable style={styles.buttonWhat} onPress={sendWhatsAppMessage}>
                 <SVGComponent />
@@ -67,14 +70,15 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         justifyContent: 'space-between',
         marginVertical: 5,
-        paddingBottom: 4,
-        borderBottomWidth: 2,
-        borderBottomColor: '#ffffff',
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        // borderBottomWidth: 2,
+        // borderBottomColor: '#ffffff',
     },
     viewContainer: {
         alignItems: 'flex-start',
         marginVertical: 20,
-        backgroundColor: '#F0F5FF',
+        backgroundColor: '#dadfe9',
         padding: 10,
         borderRadius: 5,
     },
@@ -91,10 +95,17 @@ const styles = StyleSheet.create({
     datos: {
         paddingLeft: 40,
         textAlign: 'right',
+        fontWeight: 'bold',
     },
     buttonWhat: {
         position: 'absolute',
         right: 10,
         bottom: 100,
+    },
+    btnCloseSesion: {
+        backgroundColor: '#73baff',
+        paddingHorizontal: 5,
+        paddingVertical: 15,
+        borderRadius: 8,
     },
 });

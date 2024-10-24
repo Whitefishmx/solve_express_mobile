@@ -3,7 +3,6 @@ import { Text, TextInput, View, Image, StyleSheet, Pressable, ScrollView, useWin
 import React, { useEffect, useState } from 'react';
 import Slider from '@react-native-community/slider';
 import MaskInput, { createNumberMask } from 'react-native-mask-input';
-import CerrarSesion from '../../components/CerrarSesion';
 import ConfirmacionModal from '../../components/ConfirmacionModal';
 import { useSolveStore } from '../../store/solve/useSolveStore';
 import { Ionicons } from '@expo/vector-icons';
@@ -44,7 +43,6 @@ export const HomeScreen = () => {
 
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center' }} showsVerticalScrollIndicator={false}>
-            <CerrarSesion />
             <View style={styles.body}>
                 <View>
                     <Image style={styles.logo} source={require('./../../../../assets/images/LogoSolve.png')} />
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
         height: 80,
         width: 220,
         paddingHorizontal: 10,
-        marginBottom: 25,
+        marginVertical: 25,
         resizeMode: 'stretch',
         alignItems: 'center',
     },

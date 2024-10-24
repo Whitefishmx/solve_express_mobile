@@ -18,6 +18,7 @@ export const Login = ({ navigation }: Props) => {
         password: 'Pass1234',
     });
     const [isPosting, setIsPosting] = useState(false);
+    
     const onLogin = async () => {
         const { rfc, password } = form;
         if (rfc.length === 0 || password.length === 0) {
